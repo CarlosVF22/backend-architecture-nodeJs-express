@@ -1,0 +1,118 @@
+INICIALIZAR PROYECTO
+-crear archivo package json y todos los archivos de configuración (init)
+-Agregar los script necesarios ("dev": "nodemon index.js","start": "node index.js",) al package.json
+-Instalar los paquetes necesarios (min npm nodemon)
+
+CREAR SERVIDOR
+- instalar express (npm i express)
+- require express
+- app = express
+-definir puerto
+-escuchar puerto
+-servidor creado, listo para enrutar
+
+CREANDO UN API
+-crear endpoints necesarios
+-podemos generar datafake con npm i faker
+- todos los end points especificos deben ir primero que los dinamicos
+-creo la carpeta routes
+- creo los archivos de enrutamiento necesarios
+- exporto modulo de enrutamiento
+- creamos index.js dentro de routes, el archivo que configurara las rutas
+- requerimos express en index de routers
+-Creamos constante router con express.router
+-Creamos un path generico
+-implementar middleware (recibir información)
+-agregar status code a los endpoints
+
+CREAR LOS SERVICIOS
+controllers (routers, middlewares) <->service(logica de negocio)<->libs(models)
+-crear carpeta service
+-crear archivos necesarios
+- crear clase del servicio
+-crear constructor
+-crear funciones necesarias (crear, buscar, eliminar,etc)
+-añadir fuente de datos (sea en memoria o por API)
+-agregar funcion generate para generar datos
+-Crear instancia del servicio en el router necesario
+-agregar identificador los jugadores en el servicio
+- buscar jugadores por identificador
+-realizar pruebas con postman o insomia
+-utilizamos async en las funciones de los servicios
+-agregamos async y await en los router
+-utilizamos throw para crear un error en los servicios
+-utilizamos try y catch para los errores en los routers
+
+INSTALACIÓN DE DOCKER
+-utilizamos docker desktop
+-creamos archivo docker-compose.yml
+-la version siempre es 3.3 al menos que sepamos lo contrario
+-services: el nombre del servicio que estamos corriendo, en este caso postgress
+-image: Corremos la version ultima de postgres
+-creamos variables de ambiente debajo de enviroment:
+- nombre de la base de datos: test_fullStack
+-agregar demas variables de ambiente
+-escoger el puerto por el cual va a correr
+-ya podemos lanzar postgres desde un contenedor
+-corremos en terminal docker-compose up -d postgres para levantarlo
+-verificamos que docker corre con docker-compose ps
+-docker-compose down para bajar los servicios
+-Agregamos persistencia de datos al contenedor con volumenes
+-verificamos la direccion del volumes en hub.ducker.com
+
+- NOS CONECTAMOS A LA BASE DE DATOS:
+TERMINAL
+- conexion via terminal: docker-compose exec postgres bash
+-luego ejecutar psql -h localhost -d [nameBaseDatos] -U [user]
+-entrar a la base de datos \d+
+-salir de la base de datos: \q
+INTERFAZ GRAFICA
+-Utilizamos la imagen de dpage/pgadmin4 de la pagina de docker
+-agregamos otro servicio en el archivo docker-compose.yml
+-enviamos las variables de ambiente
+-levantar servicio pgadmin docker-compose up -d pgadmin
+-Encontrar Id del contenedor docker ps
+-inspecciones Id : docker inspect [id]
+-encontramos IPAddres
+-configuramos con los datos de la base de datos en localhost:5050(puerto de pgadmin)
+
+CONECTAR NODE.JS CON POSTGRES
+-utilizamos node-postgres
+-realiazamos npm install pg
+-creamos la carpeta libs (conexion con terceros, sea API O bases de datos)
+-Creamos el archivo postgres.js
+-Utilizamos async y await en la funcion getConnection
+-returnamos el client para poder realizar las consultas
+-exportamos el modulo getConnection()
+-exportamos el modulo getConnection en playersService
+-ejecutamos la conexion creamos la variable client en el lugar que la necesitamos y lo igualamos wait getConnection
+- ya podemos empezar a relizar consultas
+- con la propiedad query podemos escribir SQL
+
+CONECTAR NODE.JS CON POSTGRES TIPO POOL (MEJOR)
+-creamos el archivo postgresPool.js
+-requerimos pool de  postgresPool
+-en el constructor declaramos el pool
+-escuchamos el pool por si hay errores
+
+CREAR ARCHIVO CONFIG.JS Y AGREGAR LAS VARIABLES DE ENTORNO
+-env: process.env.NODE_ENV || 'dev' siempre hasta que sepamos lo contrario
+-exportamos el modulo config
+- lo requerimos desde el pool de conexion
+-protegemos con encodeURIComponent();
+-creamos la url de conexion
+-le enviamos a pool{connectionString:URI}
+
+CREAR ARCHIVO VARIABLE DE ENTORNO
+-creamos el archivo .env pero no lo subimos a github
+-creamos el archivo .env.example
+-descargamos el paquete dotenv para leer el archivo .env y cargarlas al proceso de node
+-requerimos dotenv desde config.js
+
+
+
+
+
+
+
+
