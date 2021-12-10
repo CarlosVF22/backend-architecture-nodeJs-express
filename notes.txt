@@ -50,7 +50,7 @@ INSTALACIÓN DE DOCKER
 -services: el nombre del servicio que estamos corriendo, en este caso postgress
 -image: Corremos la version ultima de postgres
 -creamos variables de ambiente debajo de enviroment:
-- nombre de la base de datos: test_fullStack
+- nombre de la base de datos: fullStack
 -agregar demas variables de ambiente
 -escoger el puerto por el cual va a correr
 -ya podemos lanzar postgres desde un contenedor
@@ -109,10 +109,93 @@ CREAR ARCHIVO VARIABLE DE ENTORNO
 -descargamos el paquete dotenv para leer el archivo .env y cargarlas al proceso de node
 -requerimos dotenv desde config.js
 
+ESTRUCTURA BASE DE DATOS RELACIONALES
+-utilizamos SEQUELIZE npm install --save sequelize
+-instalamos los paquetes que necesita postgress, los encontramos en la pagina de sequelize
+- npm install --save pg pg-hstore, en este caso pg ya fue instalado
+-creamos el archivo sequelize en las librerias
+-exportamos el modulo sequelize
+-ya no vamos a hacer la conexion por pool
+-requerimos sequelize
+-consr rta = await sequelize.query(query)
+-sequelize los entrega un array
+-returnamos data y metadata
+-metada se puede omitir si se desea, trae mas informacion de contexto
+
+MODELO DE LA BASE DE DATOS
+-creamos la carpeta db (ira todo lo relacionado a la base de datos)
+-creamos la carpeta models dentro de db
+-cada archivo dentro de modelos es un modelo de tabla de bases de datos
+-requerimos Model,DataType y Sequelize de sequelize
+-la constante que llevara el nombre de la tabla va en mayusculas
+-creamos la constante playersSchema, define la estrucutura
+-creamos las columnas que llevara nuestra tabla, tipo de datos,SQL FUNDAMENTALES
+-cremos la clase con nuestro modelo
+-static associate() siempre
+-siempre static config (recibe la conexion) siempre sequelize al menos de utilizar algo diferente
+- retorna la configuracion
+-desabilitar el timeStamp
+-exportamos la tabla,schema y el modelo
+
+PARA CONECTAR ORM CON EL MODELO
+-Creamos index.js en models (envia la comunicacion a los modelos)
+- cremos la funcion setupModels(recibe la conexion)
+-exportamos setupModels
+-en este archivo iran todos los modelos y esquemas
+-ahora vamos a sequelize
+-requerimos db/models}
+-corremos setupModels justo despues de crear la instancia
+-setupModels(conexion)
+-hacemos la sincronizacion de sequelize (una manera de hacerlo)(no se recomienda en producción)
+-ahora vamos al archivo 
+
+-PARA PODER HACER CONSULTAS TIPO SQL CON PROGRAMACION ORIENTADA A OBJETOS
+-const {models} = require('./../libs/sequelize');
+-para utilizatlo const rta = await models.Players.findall(); depende lo que queramos buscar cambia el ultimo elemento
+-
+
+MIGRACIONES(IMPORTANTE)(control de versiones)
+-dejaremos de usar la funcion sequelize para crear las tablas
+-instalamos el paquete npm i sequelize-cli --save-dev  como dependencia de desarrollo
+-creamos el archivo .sequelizerc (utilizamos formato de javaScript)
+-'seeders-path': './db/migrations/' -> carga masiva de datos
+-creamos las carpetas migrations y seeders
+-creamos config.js en la carpeta db
+-en config van los archivos de conexion
+-requerimos const {config} = require('../config/config');
+-agregamos el user, password y URI
+-declaramos module.exports, declaramos los diferentes ambientes
+- con esta configuracion ya podemos comenzar a correr migraciones
+
+CORRIENDO MIGRACIONES
+-creamos nuevos scrips y el archivo package.json para correr las migraciones
+-"migrations:gerenate": "sequelize-cli migration:generate --name"
+-ya podemos correr el script en terminal y se nos creara un nuevo archivo en la carpeta migrations
+-el archivo recien creado solo es una plantilla y manuelamente lo debemos modificar
+-primero vamos al archivo sequelize y eliminamos sequelize.sync()
+-vamos al archivo de migrations
+-requerimos el schema y la tabla del modelo necesario (const {PlayersSchema, PLAYERS_TABLE} = require('./../models/playersModels');)
+-modificamos el module.exports
+-con DOWN REVERTIMOS CAMBIOS
+-normalmente la primer migracion
+-CORRER MIGRACION
+-creamos otro scrips ("migrations:run": "sequelize-cli db:migrate") DETECTA LAS MIGRACIONES DE LA CARPETA MIGRATIOS
+-REVERTIR LO ULTIMO
+-creamos otro scrips ("migrations:revert": "sequelize-cli db:migrate:undo")
+-OPCIONAL creamos otro scrip opcional para, ELIMNAR TODAS LAS MIGRACIONES, ELIMINAR TODO de la base de datos ("migrations:delete": "sequelize-cli db:migrate:undo:all")
+
+RELACIONES EN LA BASE DE DATOS
+TODO
 
 
 
 
 
+
+
+
+
+joi es una libreria que verifica la entrada de datos
+boom es una libreria para lanzar errores
 
 

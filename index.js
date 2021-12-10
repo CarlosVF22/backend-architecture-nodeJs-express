@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json()); //middleware
+app.use(express.urlencoded({extended:false}));
 
 routerApi(app)
 
