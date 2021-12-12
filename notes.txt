@@ -2,6 +2,9 @@ INICIALIZAR PROYECTO
 -crear archivo package json y todos los archivos de configuración (init)
 -Agregar los script necesarios ("dev": "nodemon index.js","start": "node index.js",) al package.json
 -Instalar los paquetes necesarios (min npm nodemon)
+-crear archivo .eslintrc.json
+-copiar configuracion de otro archivo
+npm i nodemon eslint eslint-config-prettier eslint-plugin-prettier prettier -D
 
 CREAR SERVIDOR
 - instalar express (npm i express)
@@ -74,6 +77,7 @@ INTERFAZ GRAFICA
 -Encontrar Id del contenedor docker ps
 -inspecciones Id : docker inspect [id]
 -encontramos IPAddres
+-creamos un servidor con los datos obtenidos
 -configuramos con los datos de la base de datos en localhost:5050(puerto de pgadmin)
 
 CONECTAR NODE.JS CON POSTGRES
@@ -106,7 +110,9 @@ CREAR ARCHIVO CONFIG.JS Y AGREGAR LAS VARIABLES DE ENTORNO
 CREAR ARCHIVO VARIABLE DE ENTORNO
 -creamos el archivo .env pero no lo subimos a github
 -creamos el archivo .env.example
+-npm i dotenv
 -descargamos el paquete dotenv para leer el archivo .env y cargarlas al proceso de node
+-creamos la carpeta config y archivo config.js
 -requerimos dotenv desde config.js
 
 ESTRUCTURA BASE DE DATOS RELACIONALES
@@ -147,9 +153,10 @@ PARA CONECTAR ORM CON EL MODELO
 -corremos setupModels justo despues de crear la instancia
 -setupModels(conexion)
 -hacemos la sincronizacion de sequelize (una manera de hacerlo)(no se recomienda en producción)
--ahora vamos al archivo 
+ 
 
 -PARA PODER HACER CONSULTAS TIPO SQL CON PROGRAMACION ORIENTADA A OBJETOS
+-ahora vamos a la carpeta de servicios y requerimos lo siguiente en los archivos adentro
 -const {models} = require('./../libs/sequelize');
 -para utilizatlo const rta = await models.Players.findall(); depende lo que queramos buscar cambia el ultimo elemento
 -
@@ -185,7 +192,13 @@ CORRIENDO MIGRACIONES
 -OPCIONAL creamos otro scrip opcional para, ELIMNAR TODAS LAS MIGRACIONES, ELIMINAR TODO de la base de datos ("migrations:delete": "sequelize-cli db:migrate:undo:all")
 
 RELACIONES EN LA BASE DE DATOS
-TODO
+RELACION MUCHOS A 1
+- creamos la relacion en la tabla correspondiente
+-el muchos lleva la relación
+-el uno lleva la asociación
+- cargamos la asociación al index.js de models
+-
+
 
 
 
